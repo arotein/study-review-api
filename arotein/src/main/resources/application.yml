@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+logging.level:
+  org.hibernate:
+    SQL: debug
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/arotein?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: arotein
+    password: arotein
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate.ddl-auto: create
+
