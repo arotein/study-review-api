@@ -2,6 +2,7 @@ server:
   port: 8080
 
 logging.level:
+  root: info
   org.hibernate:
     SQL: debug
 
@@ -19,4 +20,3 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate.ddl-auto: create
-
