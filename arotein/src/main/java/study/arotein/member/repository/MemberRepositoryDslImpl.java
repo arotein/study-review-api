@@ -26,4 +26,10 @@ public class MemberRepositoryDslImpl implements MemberRepositoryDsl {
                 .where(member.id.eq(id), member.status.ne(Status.DELETED))
                 .fetchOne();
     }
+
+    public Member findMemberByEmail(String email) {
+        return queryFactory.selectFrom(member)
+                .where(member.email.eq(email), member.status.ne(Status.DELETED))
+                .fetchOne();
+    }
 }

@@ -1,6 +1,7 @@
 package study.arotein.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.arotein.exception.CustomException;
@@ -19,6 +20,7 @@ import study.arotein.member.repository.MemberRepository;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Long signUp(String email, String rawPassword, String username) {
         // username 검증
@@ -33,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
             throw new CustomException(2, "password는 8~60자의 숫자, 영문자, 특수문자만 가능합니다.");
         }
 
-        Member member = new Member(email, rawPassword, username);
+        Member member = new Member(email, passwordEncoder.encode(rawPassword), username);
         Member savedMember = memberRepository.save(member);
         return savedMember.getId();
     }
