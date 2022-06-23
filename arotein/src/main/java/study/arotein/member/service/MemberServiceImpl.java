@@ -9,7 +9,7 @@ import study.arotein.member.entity.Member;
 import study.arotein.member.repository.MemberRepository;
 
 /**
- * 예외코드넘버 : 1~100
+ * 예외코드 : 1~100
  * username 생성규칙 : 3~8자의 숫자, 영문, 한글만 가능
  * password 생성규칙 : 8~60자의 숫자, 영문 소문자, 영문 대문자, 지정 특수문자만 사용가능
  * 지정 특수문자 : ~!@#$%^&*()_+

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***
- * 에러코드 : 1101~1200
+ * 예외코드 : 1101~1200
  */
 @Service
 @Transactional

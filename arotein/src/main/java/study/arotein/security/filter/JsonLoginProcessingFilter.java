@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /***
- * 에러코드 : 1000~1100
+ * 예외코드 : 1001~1100
  */
 public class JsonLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
     private ObjectMapper objectMapper;
