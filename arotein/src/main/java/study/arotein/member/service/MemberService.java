@@ -1,9 +1,13 @@
 package study.arotein.member.service;
 
-import study.arotein.member.entity.Member;
+import study.arotein.member.dto.MemberResDto;
+
+import javax.mail.MessagingException;
 
 public interface MemberService {
-    Long signUp(String email, String rawPassword, String username);
+    Boolean signUp(String email, String rawPassword, String username) throws MessagingException;
 
-    Member findMemberById(Long id);
+    Boolean approvalEmail(String approvalStr);
+
+    MemberResDto findMemberById(Long id);
 }

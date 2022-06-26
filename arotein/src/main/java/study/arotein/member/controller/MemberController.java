@@ -3,9 +3,11 @@ package study.arotein.member.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import study.arotein.base.ResponseBase;
+import study.arotein.member.dto.MemberResDto;
 import study.arotein.member.dto.SignUpReqDto;
-import study.arotein.member.entity.Member;
 import study.arotein.member.service.MemberService;
+
+import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("/api")
@@ -14,18 +16,25 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/sign-up")
-    public ResponseBase signUp(@RequestBody SignUpReqDto signUpReqDto) {
-        Long id = memberService.signUp(signUpReqDto.getEmail(), signUpReqDto.getPassword(), signUpReqDto.getUsername());
+    public ResponseBase signUp(@RequestBody SignUpReqDto signUpReqDto) throws MessagingException {
+        Boolean bool = memberService.signUp(signUpReqDto.getEmail(), signUpReqDto.getPassword(), signUpReqDto.getUsername());
         ResponseBase response = new ResponseBase();
-        response.setData(id);
+        response.setData(bool);
         return response;
+    }
+
+    @GetMapping("/email/approval/{approvalStr}")
+    public ResponseBase signUpApproval(@PathVariable String approvalStr) {
+        ResponseBase responseBase = new ResponseBase();
+        responseBase.setSuccess(memberService.approvalEmail(approvalStr));
+        return responseBase;
     }
 
     @GetMapping("/member/{id}")
     public ResponseBase findMember(@PathVariable("id") Long id) {
-        Member member = memberService.findMemberById(id);
+        MemberResDto memberDto = memberService.findMemberById(id);
         ResponseBase response = new ResponseBase();
-        response.setData(member);
+        response.setData(memberDto);
         return response;
     }
 }
