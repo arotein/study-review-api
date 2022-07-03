@@ -11,6 +11,7 @@ import study.arotein.chat.dto.ChatRoomResDto;
 import study.arotein.chat.service.ChatService;
 import study.arotein.security.bean.ClientMemberLoader;
 
+import javax.validation.constraints.Positive;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class ChatController {
 
     // 채팅방 목록
     @GetMapping("/rooms")
-    public ResponseBase chatRooms(@RequestParam(required = false, defaultValue = "1") Integer page) {
+    public ResponseBase chatRooms(@Positive @RequestParam(required = false, defaultValue = "1") Integer page) {
         Long myMemberId = clientMemberLoader.getClientMember().getId();
         List<ChatRoomDto> chatRoomDtos = chatService.loadChatRooms(page - 1)
                 .stream()
@@ -41,8 +42,8 @@ public class ChatController {
 
     // 채팅내용 출력
     @GetMapping("/{chatRoomId}")
-    public ResponseBase chatContents(@PathVariable Long chatRoomId,
-                                     @RequestParam(required = false, defaultValue = "1") Integer page) {
+    public ResponseBase chatContents(@Positive @PathVariable Long chatRoomId,
+                                     @Positive @RequestParam(required = false, defaultValue = "1") Integer page) {
         List<ChatContentDto> messages = chatService.loadMessages(chatRoomId, page - 1);
         ResponseBase response = new ResponseBase();
         response.setData(new ChatContentResDto(messages));
@@ -51,7 +52,7 @@ public class ChatController {
 
     // 채팅방 새로 생성
     @GetMapping("/create/{otherMemberId}")
-    public ResponseBase startChat(@PathVariable Long otherMemberId) {
+    public ResponseBase startChat(@Positive @PathVariable Long otherMemberId) {
         Long roomId = chatService.createChatRoom(otherMemberId);
         ResponseBase response = new ResponseBase();
         response.setRedirect(String.format("/chat/{%d}", roomId));
@@ -60,7 +61,7 @@ public class ChatController {
 
     // 메세지 보내기
     @PostMapping("/{chatRoomId}/send")
-    public ResponseBase sendMessage(@PathVariable Long chatRoomId,
+    public ResponseBase sendMessage(@Positive @PathVariable Long chatRoomId,
                                     @RequestBody HashMap<String, String> messageMap) {
         chatService.sendMessage(chatRoomId, messageMap.get("message"));
         return new ResponseBase();
@@ -68,7 +69,7 @@ public class ChatController {
 
     // 대화방 나가기
     @GetMapping("/{chatRoomId}/delete")
-    public ResponseBase leaveChatRoom(@PathVariable Long chatRoomId) {
+    public ResponseBase leaveChatRoom(@Positive @PathVariable Long chatRoomId) {
         chatService.leaveChatRoom(chatRoomId);
         ResponseBase response = new ResponseBase();
         response.setRedirect("/chat/rooms");
